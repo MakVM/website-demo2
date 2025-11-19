@@ -35,6 +35,9 @@ jobs:
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
+      - name: Install react IG
+        run: npm install react-is
+
       - name: Run I guess?
         run: npm run dev
         
