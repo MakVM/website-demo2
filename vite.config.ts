@@ -20,5 +20,5 @@ export default defineConfig({
     },
   },
   // Add this for GitHub Pages - replace 'your-repo-name' with your actual repository name
-  base: process.env.NODE_ENV === 'production' ? '/your-repository-name/' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/website-demo2/' : '/',
 });
