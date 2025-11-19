@@ -33,10 +33,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
-
-      - name: Install react IG
-        run: npm install react-is
+        run: npm install --legacy-peer-deps --force
 
       - name: Run I guess?
         run: npm run dev
