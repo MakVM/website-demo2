@@ -11,6 +11,7 @@ export default defineConfig({
     allowedHosts: true,
   },
   build: {
+    outDir: "dist",
     chunkSizeWarningLimit: 5000,
   },
   resolve: {
@@ -18,4 +19,6 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // Add this for GitHub Pages - replace 'your-repo-name' with your actual repository name
+  base: process.env.NODE_ENV === 'production' ? '/your-repository-name/' : '/',
 });
