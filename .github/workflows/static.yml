@@ -30,6 +30,9 @@ jobs:
       - name: Install react-is
         run: npm install react-is --legacy-peer-deps
         
+      - name: Generate Cloudflare types
+        run: npx wrangler types
+        
       - name: Build the app
         run: npm run build
         
