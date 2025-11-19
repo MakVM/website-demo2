@@ -10,83 +10,34 @@ permissions:
   pages: write
   id-token: write
 
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 20
 
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
-      - name: Install react-is
-        run: npm install react-is --legacy-peer-deps
-        
-      - name: Generate Cloudflare types
-        run: npx wrangler types
-        
-      - name: Build the app
+      - name: Build
         run: npm run build
-        
-      - name: Debug build output
-        run: |
-          echo "=== Current directory ==="
-          pwd
-          echo "=== All files ==="
-          ls -la
-          echo "=== dist folder contents ==="
-          ls -la dist/ || echo "No dist folder"
-          echo "=== Checking for index.html ==="
-          find . -name "index.html" -type f | head -10
-          echo "=== File structure ==="
-          tree -L 3 || find . -type d | sort
 
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-files
-          path: |
-            dist/
-            ./
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build-files
-
-      - name: List downloaded files
-        run: |
-          echo "=== Downloaded files ==="
-          ls -la
-          echo "=== dist contents ==="
-          ls -la dist/ || echo "No dist folder in downloaded files"
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-        
-      - name: Upload to GitHub Pages
-        id: upload
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          path: dist
 
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v4
+
