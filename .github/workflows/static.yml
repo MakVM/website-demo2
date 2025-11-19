@@ -37,10 +37,10 @@ jobs:
 
 
       - name: Install more
-        run: npm install react-is
+        run: npm install react-is --legacy-peer-deps
         
       - name: Run I guess?
-        run: npm run dev
+        run: npm run dev &
         
       - name: Setup Pages
         uses: actions/configure-pages@v5
